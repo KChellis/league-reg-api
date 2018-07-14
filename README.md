@@ -20,7 +20,7 @@ _This API is part of a larger capstone project for epicodus. The API manages all
 *_As an admin, I want to create/edit/delete games_
 
 ##Schema
-_Create database schema, not sure how to save it on here and I don't have internet access so I will add it later
+![Component Structure](/src/main/resources/public/images/schema.pdf)
 
 ## Setup/Installation Requirements
 
