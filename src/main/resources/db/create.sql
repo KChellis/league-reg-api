@@ -1,6 +1,6 @@
 SET MODE PostgreSql;
 
-CREATE TABLE IF NOT EXISTS league (
+CREATE TABLE IF NOT EXISTS leagues (
  id int PRIMARY KEY auto_increment,
  name VARCHAR,
  description,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS league (
  rules VARCHAR
 );
 
-CREATE TABLE IF NOT EXISTS team (
+CREATE TABLE IF NOT EXISTS teams (
  id int PRIMARY KEY auto_increment,
  name VARCHAR,
  color VARCHAR,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS team (
  leagueId INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS player (
+CREATE TABLE IF NOT EXISTS players (
  id int PRIMARY KEY auto_increment,
  firstName VARCHAR,
  lastName VARCHAR,
@@ -35,9 +35,21 @@ CREATE TABLE IF NOT EXISTS player (
  city VARCHAR,
  state VARCHAR,
  zip INTEGER,
- ref BOOLEAN,
  shirtSize VARCHAR,
  gender VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS games (
+ id int PRIMARY KEY auto_increment
+ date DATE,
+ time TIME,
+ field VARCHAR,
+ leagueId INTEGER,
+ headRefId INTEGER,
+ otherRefId INTEGER,
+ winnerScore INTEGER,
+ loserScore INTEGER,
+ winnerId INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS players_teams (
@@ -45,3 +57,16 @@ CREATE TABLE IF NOT EXISTS players_teams (
  playerId INTEGER,
  teamId INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS teams_games (
+ id int PRIMARY KEY auto_increment,
+ gameId INTEGER,
+ teamId INTEGER
+)
+
+CREATE TABLE IF NOT EXISTS referees (
+ id int PRIMARY KEY auto_increment,
+ playerId INTEGER,
+ leagueId INTEGER
+)
+
