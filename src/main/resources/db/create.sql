@@ -31,10 +31,6 @@ CREATE TABLE IF NOT EXISTS players (
  firstName VARCHAR,
  lastName VARCHAR,
  email VARCHAR,
- street VARCHAR,
- city VARCHAR,
- state VARCHAR,
- zip INTEGER,
  shirtSize VARCHAR,
  gender VARCHAR
 );
