@@ -11,7 +11,6 @@ public class Team {
     private int draws;
     private int pointsFor;
     private int pointsAgainst;
-    private int ranking;
 
     public Team(String name, String color, String regCode, int captainId, int leagueId) {
         this.name = name;
@@ -84,13 +83,5 @@ public class Team {
 
     public void setPointsAgainst(int pointsAgainst) {
         this.pointsAgainst = pointsAgainst;
-    }
-
-    public int getRanking() {
-        return ranking;
-    }
-
-    public void setRanking(int ranking) {
-        this.ranking = ranking;
     }
 }
