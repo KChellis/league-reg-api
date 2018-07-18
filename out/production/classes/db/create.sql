@@ -5,13 +5,19 @@ CREATE TABLE IF NOT EXISTS leagues (
  name VARCHAR,
  description,
  weekday VARCHAR,
- sport VARCHAR,
+ sportId INTEGER,
  field VARCHAR,
  startDate DATE,
  earlyTime TIME,
  lateTime TIME,
- tournamentDay DATE,
+ tournamentDay DATE
+);
+
+CREATE TABLE IF NOT EXISTS sports (
+ id int PRIMARY KEY auto_increment,
+ name VARCHAR,
  price INTEGER,
+ duration INTEGER,
  maxPlayers INTEGER,
  minPlayers INTEGER,
  rules VARCHAR

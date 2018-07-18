@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS leagues (
 
 CREATE TABLE IF NOT EXISTS sports (
  id int PRIMARY KEY auto_increment,
+ name VARCHAR,
  price INTEGER,
  duration INTEGER,
  maxPlayers INTEGER,
