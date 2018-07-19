@@ -10,11 +10,11 @@ public class League {
     private int sportId;
     private String field;
     private Date startDate;
-    private Time earlyTime;
-    private Time lateTime;
+    private String earlyTime;
+    private String lateTime;
     private Date tourneyDay;
 
-    public League(String name, String description, String weekday, int sportId, String field, Date startDate, Time earlyTime, Time lateTime, Date tourneyDay) {
+    public League(String name, String description, String weekday, int sportId, String field, Date startDate, String earlyTime, String lateTime, Date tourneyDay) {
         this.name = name;
         this.description = description;
         this.weekday = weekday;
@@ -50,11 +50,11 @@ public class League {
         return startDate;
     }
 
-    public Time getEarlyTime() {
+    public String getEarlyTime() {
         return earlyTime;
     }
 
-    public Time getLateTime() {
+    public String getLateTime() {
         return lateTime;
     }
 

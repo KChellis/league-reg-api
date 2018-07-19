@@ -13,37 +13,37 @@ public class SportTest {
     }
 
     @Test
-    public void newTeamInstantiatesWithName() {
+    public void newSportInstantiatesWithName() {
         Sport testSport = setupSport();
         assertEquals("Kickball", testSport.getName());
     }
 
     @Test
-    public void newTeamInstantiatesWithPrice() {
+    public void newSportInstantiatesWithPrice() {
         Sport testSport = setupSport();
         assertEquals(80, testSport.getPrice());
     }
 
     @Test
-    public void newTeamInstantiatesWithMaxPlayers() {
+    public void newSportInstantiatesWithMaxPlayers() {
         Sport testSport = setupSport();
         assertEquals(18, testSport.getMaxPlayers());
     }
 
     @Test
-    public void newTeamInstantiatesWithMinPlayers() {
+    public void newSportInstantiatesWithMinPlayers() {
         Sport testSport = setupSport();
         assertEquals(8, testSport.getMinPlayers());
     }
 
     @Test
-    public void newTeamInstantiatesWithDuration() {
+    public void newSportInstantiatesWithDuration() {
         Sport testSport = setupSport();
         assertEquals(55, testSport.getDuration());
     }
 
     @Test
-    public void newTeamInstantiatesWithRules() {
+    public void newSportInstantiatesWithRules() {
         Sport testSport = setupSport();
         assertEquals("ruleslink", testSport.getRules());
     }

@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS leagues (
  sportId INTEGER,
  field VARCHAR,
  startDate DATE,
- earlyTime TIME,
- lateTime TIME,
+ earlyTime VARCHAR,
+ lateTime VARCHAR,
  tournamentDay DATE
 );
 
