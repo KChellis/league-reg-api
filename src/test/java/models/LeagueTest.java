@@ -69,6 +69,13 @@ public class LeagueTest {
         assertEquals(new Date(11/01/2018), testLeague.getTourneyDay());
     }
 
+    @Test
+    public void setIdSetsId() {
+        League testLeague = setupLeague();
+        testLeague.setId(1);
+        assertEquals(1, testLeague.getId());
+    }
+
     public League setupLeague(){
         League sampleLeague = new League("Slow Pitch Kickball", "Stuff about a league", "Sunday", 1,"Overlook Park", new Date(10/12/2018), "10:00 AM", "5:00 PM", new Date(11/01/2018));
         return sampleLeague;
