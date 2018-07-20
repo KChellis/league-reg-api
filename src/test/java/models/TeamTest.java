@@ -107,6 +107,13 @@ public class TeamTest {
         assertEquals(7, testTeam.getPointsAgainst());
     }
 
+    @Test
+    public void setIdSetsId() {
+        Team testTeam = setupTeam();
+        testTeam.setPointsAgainst(1);
+        assertEquals(1, testTeam.getId());
+    }
+
     public Team setupTeam(){
         Team sampleTeam = new Team("Ingalls", "Yellow", "sampleRegCode", 3, 1);
         return sampleTeam;

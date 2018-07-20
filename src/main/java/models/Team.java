@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 public class Team {
     private String name;
     private String color;
@@ -11,6 +13,8 @@ public class Team {
     private int draws;
     private int pointsFor;
     private int pointsAgainst;
+    private int id;
+
 
     public Team(String name, String color, String regCode, int captainId, int leagueId) {
         this.name = name;
@@ -83,5 +87,36 @@ public class Team {
 
     public void setPointsAgainst(int pointsAgainst) {
         this.pointsAgainst = pointsAgainst;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return captainId == team.captainId &&
+                leagueId == team.leagueId &&
+                wins == team.wins &&
+                losses == team.losses &&
+                draws == team.draws &&
+                pointsFor == team.pointsFor &&
+                pointsAgainst == team.pointsAgainst &&
+                Objects.equals(name, team.name) &&
+                Objects.equals(color, team.color) &&
+                Objects.equals(regCode, team.regCode);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, color, regCode, captainId, leagueId, wins, losses, draws, pointsFor, pointsAgainst);
     }
 }
