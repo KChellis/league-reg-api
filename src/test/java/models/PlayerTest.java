@@ -42,6 +42,13 @@ public class PlayerTest {
         assertEquals("female", testPlayer.getGender());
     }
 
+    @Test
+    public void setIdSetsId() {
+        Player testPlayer = setupPlayer();
+        testPlayer.setId(1);
+        assertEquals(1, testPlayer.getId());
+    }
+
     public Player setupPlayer(){
         Player samplePlayer = new Player("Kristen", "Chellis", "peanutster@gmail.com", "Small", "female");
         return samplePlayer;
