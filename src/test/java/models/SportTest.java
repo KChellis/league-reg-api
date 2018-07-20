@@ -48,6 +48,13 @@ public class SportTest {
         assertEquals("ruleslink", testSport.getRules());
     }
 
+    @Test
+    public void setIdSetsId() {
+        Sport testSport = setupSport();
+        testSport.setId(1);
+        assertEquals(1, testSport.getId());
+    }
+
     public Sport setupSport() {
         Sport sampleSport = new Sport("Kickball", 80, 18, 8, 55, "ruleslink");
         return sampleSport;
