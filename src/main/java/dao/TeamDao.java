@@ -10,11 +10,13 @@ public interface TeamDao {
 
     //CREATE
     void add (Team team);
+    void addTeamToGame(int teamId, int gameId);
 
     //READ
     Team findById(int id);
     List<Team> findByLeague(int leagueId);
     List<Team> findByPlayer(int playerId);
+    List<Team> findByGame(int gameId);
 
     //UPDATE
     void update(int id, HashMap<String, Object> updateContent);

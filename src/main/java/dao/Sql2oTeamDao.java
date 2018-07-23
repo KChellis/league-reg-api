@@ -40,6 +40,19 @@ public class Sql2oTeamDao implements TeamDao{
     }
 
     @Override
+    public void addTeamToGame(int teamId, int gameId) {
+        String sql = "INSERT INTO teams_games (teamId, gameId) VALUES (:teamId, :gameId)";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("teamId", teamId)
+                    .addParameter("gameId", gameId)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
+
+    @Override
     public Team findById(int id) {
         String sql = "SELECT * FROM teams WHERE id=:id";
         try (Connection con = sql2o.open()) {
@@ -69,6 +82,31 @@ public class Sql2oTeamDao implements TeamDao{
         try (Connection con = sql2o.open()) {
             List<Integer> allTeamIds = con.createQuery(joinQuery)
                     .addParameter("playerId", playerId)
+                    .executeAndFetch(Integer.class);
+            for(Integer teamId : allTeamIds){
+                String teamQuery = "SELECT * FROM teams WHERE id = :teamId";
+                teams.add(
+                        con.createQuery(teamQuery)
+                                .addParameter("teamId", teamId)
+                                .executeAndFetchFirst(Team.class));
+            }
+
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+        return teams;
+    }
+
+    @Override
+    public List<Team> findByGame(int gameId) {
+        ArrayList<Team> teams = new ArrayList<>();
+
+        String joinQuery = "SELECT teamId FROM teams_games WHERE gameId = :gameId";
+
+
+        try (Connection con = sql2o.open()) {
+            List<Integer> allTeamIds = con.createQuery(joinQuery)
+                    .addParameter("gameId", gameId)
                     .executeAndFetch(Integer.class);
             for(Integer teamId : allTeamIds){
                 String teamQuery = "SELECT * FROM teams WHERE id = :teamId";

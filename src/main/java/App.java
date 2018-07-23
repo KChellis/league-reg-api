@@ -69,6 +69,44 @@ public class App {
             }
         });
 
+        get("/games/:gameId/teams", "application/json", (req, res) -> {
+            try {
+                int gameId = Integer.parseInt(req.params("gameId"));
+                List<Team> teamsByGame = teamDao.findByGame(gameId);
+                if(teamsByGame.size() > 0){
+                    return gson.toJson(teamsByGame);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"No teams match this game\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+        });
+
+        post("/games/:gameId/teams/:teamId/add", "application/json", (req, res) -> {
+            try{
+                int gameId = Integer.parseInt(req.params("gameId"));
+                int teamId = Integer.parseInt(req.params("teamId"));
+                Game currentGame = gameDao.findById(gameId);
+                Team currentTeam = teamDao.findById(teamId);
+                if (currentGame != null && currentTeam != null){
+                    res.status(201);
+                    teamDao.addTeamToGame(teamId, gameId);
+                    return "{\"message\":\"Team has been added to game\"}";
+                } else{
+                    res.status(404);
+                    return "{\"message\":\"Game or team not found\"}";
+                }
+
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
+        });
+
         get("/games/:gameId/delete", "application/json", (req, res) -> {
             try{
                 int gameId = Integer.parseInt(req.params("gameId"));
@@ -247,15 +285,15 @@ public class App {
             }
         });
 
-        get("/teams/:teamId/players", "application/json", (req, res) -> {
+        get("/players/:playerId/teams", "application/json", (req, res) -> {
             try {
-                int teamId = Integer.parseInt(req.params("teamId"));
-                List<Player> playersByTeam = playerDao.findByTeam(teamId);
-                if(playersByTeam.size() > 0){
-                    return gson.toJson(playersByTeam);
+                int playerId = Integer.parseInt(req.params("playerId"));
+                List<Team> teamsByPlayer = teamDao.findByPlayer(playerId);
+                if(teamsByPlayer.size() > 0){
+                    return gson.toJson(teamsByPlayer);
                 } else {
                     res.status(404);
-                    return "{\"message\":\"No players match this team\"}";
+                    return "{\"message\":\"No teams match this player\"}";
                 }
             } catch ( Error error){
                 res.status(400);
@@ -263,27 +301,7 @@ public class App {
             }
         });
 
-        post("/players/:playerId/teams/:teamId/add", "application/json", (req, res) -> {
-            try{
-                int playerId = Integer.parseInt(req.params("playerId"));
-                int teamId = Integer.parseInt(req.params("teamId"));
-                Player currentPlayer = playerDao.findById(playerId);
-                Team currentTeam = teamDao.findById(teamId);
-                if (currentPlayer != null && currentTeam != null){
-                    res.status(201);
-                    playerDao.addPlayerToTeam(playerId, teamId);
-                    return "{\"message\":\"Player has been added to team\"}";
-                } else{
-                    res.status(404);
-                    return "{\"message\":\"Player or team not found\"}";
-                }
 
-            } catch (Error error){
-                res.status(400);
-                return "{\"message\":\"Sorry your request could not be processed\"}";
-            }
-
-        });
 
         get("/players/:playerId/delete", "application/json", (req, res) -> {
             try{
@@ -447,15 +465,53 @@ public class App {
             }
         });
 
-        get("/players/:playerId/teams", "application/json", (req, res) -> {
+        get("/teams/:teamId/players", "application/json", (req, res) -> {
             try {
-                int playerId = Integer.parseInt(req.params("playerId"));
-                List<Team> teamsByPlayer = teamDao.findByPlayer(playerId);
-                if(teamsByPlayer.size() > 0){
-                    return gson.toJson(teamsByPlayer);
+                int teamId = Integer.parseInt(req.params("teamId"));
+                List<Player> playersByTeam = playerDao.findByTeam(teamId);
+                if(playersByTeam.size() > 0){
+                    return gson.toJson(playersByTeam);
                 } else {
                     res.status(404);
-                    return "{\"message\":\"No teams match this player\"}";
+                    return "{\"message\":\"No players match this team\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+        });
+
+        post("/teams/:teamId/players/:playerId/add", "application/json", (req, res) -> {
+            try{
+                int playerId = Integer.parseInt(req.params("playerId"));
+                int teamId = Integer.parseInt(req.params("teamId"));
+                Player currentPlayer = playerDao.findById(playerId);
+                Team currentTeam = teamDao.findById(teamId);
+                if (currentPlayer != null && currentTeam != null){
+                    res.status(201);
+                    playerDao.addPlayerToTeam(playerId, teamId);
+                    return "{\"message\":\"Player has been added to team\"}";
+                } else{
+                    res.status(404);
+                    return "{\"message\":\"Player or team not found\"}";
+                }
+
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
+        });
+
+        get("/teams/:teamId/games", "application/json", (req, res) -> {
+            try {
+                int teamId = Integer.parseInt(req.params("teamId"));
+                List<Game> gamesByTeam = gameDao.findByTeam(teamId);
+                if(gamesByTeam.size() > 0){
+                    return gson.toJson(gamesByTeam);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"No games match this team\"}";
                 }
             } catch ( Error error){
                 res.status(400);
