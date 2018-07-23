@@ -48,10 +48,18 @@ public class Sql2oLeagueDaoTest {
     }
 
     @Test
-    public void findById() {
+    public void findById_returnsCorrectLeague() {
         League testLeague = setupLeague();
         League testLeague2 = setupLeague2();
         assertEquals(testLeague2.getName(), leagueDao.findById(2).getName());
+    }
+
+    @Test
+    public void findBySport_returnsLeaguesBySport() throws Exception {
+        League testLeague = setupLeague();
+        League testLeague2 = setupLeague2();
+        League testLeague3 = setupLeague();
+        assertEquals(2, leagueDao.findBySport(1).size());
     }
 
     @Test
@@ -88,7 +96,7 @@ public class Sql2oLeagueDaoTest {
     }
 
     public League setupLeague2(){
-        League sampleLeague = new League("Fast Pitch Kickball", "Stuff about a second league", "Monday", 1,"Glenhaven Park", new Date(10/13/2018), "11:00 AM", "4:00 PM", new Date(11/02/2018));
+        League sampleLeague = new League("Fast Pitch Kickball", "Stuff about a second league", "Monday", 2,"Glenhaven Park", new Date(10/13/2018), "11:00 AM", "4:00 PM", new Date(11/02/2018));
         leagueDao.add(sampleLeague);
         return sampleLeague;
     }
