@@ -55,6 +55,14 @@ public class Sql2oTeamDaoTest {
     }
 
     @Test
+    public void findByLeague_returnsTeamsByLeague() throws Exception {
+        Team testTeam = setupTeam();
+        Team testTeam2 = setupTeam2();
+        Team testTeam3 = setupTeam();
+        assertEquals(2, teamDao.findByLeague(1).size());
+    }
+
+    @Test
     public void update() {
         Team testTeam = setupTeam();
         HashMap<String, Object> updateContent = new HashMap<>();

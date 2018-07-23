@@ -13,6 +13,7 @@ public interface TeamDao {
 
     //READ
     Team findById(int id);
+    List<Team> findByLeague(int leagueId);
 
     //UPDATE
     void update(int id, HashMap<String, Object> updateContent);
