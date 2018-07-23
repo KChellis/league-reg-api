@@ -219,6 +219,23 @@ public class App {
             }
         });
 
+        get("/sports/:sportId/leagues", "application/json", (req, res) -> {
+            try {
+                int sportId = Integer.parseInt(req.params("sportId"));
+                Sport currentSport = sportDao.findById(sportId);
+                List<League> leaguesBySport = leagueDao.findBySport(sportId);
+                if(leaguesBySport.size() > 0){
+                    return gson.toJson(leaguesBySport);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"No leagues match this sportgit\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+        });
+
         get("/sports/:sportId/delete", "application/json", (req, res) -> {
             try{
                 int sportId = Integer.parseInt(req.params("sportId"));
