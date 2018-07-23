@@ -29,7 +29,12 @@ CREATE TABLE IF NOT EXISTS teams (
  color VARCHAR,
  regCode VARCHAR,
  captainId INTEGER,
- leagueId INTEGER
+ leagueId INTEGER,
+ wins INTEGER,
+ losses INTEGER,
+ draws INTEGER,
+ pointsFor INTEGER,
+ pointsAgainst INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS players (
@@ -60,8 +65,8 @@ CREATE TABLE IF NOT EXISTS players_teams (
 
 CREATE TABLE IF NOT EXISTS teams_games (
  id int PRIMARY KEY auto_increment,
- gameId INTEGER,
- teamId INTEGER
+ teamId INTEGER,
+ gameId INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS referees (

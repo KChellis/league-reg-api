@@ -162,6 +162,28 @@ public class App {
             }
         });
 
+        post("/players/:playerId/teams/:teamId/add", "application/json", (req, res) -> {
+            try{
+                int playerId = Integer.parseInt(req.params("playerId"));
+                int teamId = Integer.parseInt(req.params("teamId"));
+                Player currentPlayer = playerDao.findById(playerId);
+                Team currentTeam = teamDao.findById(teamId);
+                if (currentPlayer != null && currentTeam != null){
+                    res.status(201);
+                    playerDao.addPlayerToTeam(playerId, teamId);
+                    return "{\"message\":\"Player has been added to team\"}";
+                } else{
+                    res.status(404);
+                    return "{\"message\":\"Player or team not found\"}";
+                }
+
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
+        });
+
         get("/players/:playerId/delete", "application/json", (req, res) -> {
             try{
                 int playerId = Integer.parseInt(req.params("playerId"));
@@ -317,6 +339,22 @@ public class App {
                 } else {
                     res.status(404);
                     return "{\"message\":\"Team not found\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+        });
+
+        get("/teams/:teamId/players", "application/json", (req, res) -> {
+            try {
+                int teamId = Integer.parseInt(req.params("teamId"));
+                List<Player> playersByTeam = playerDao.findByTeam(teamId);
+                if(playersByTeam.size() > 0){
+                    return gson.toJson(playersByTeam);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"No players match this team\"}";
                 }
             } catch ( Error error){
                 res.status(400);
