@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc967689-ebfc-4d8a-b384-142c39958bee" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/App.class" afterPath="$PROJECT_DIR$/build/classes/java/main/App.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/dao/LeagueDao.class" afterPath="$PROJECT_DIR$/build/classes/java/main/dao/LeagueDao.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/dao/Sql2oLeagueDao.class" afterPath="$PROJECT_DIR$/build/classes/java/main/dao/Sql2oLeagueDao.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/test/dao/Sql2oLeagueDaoTest.class" afterPath="$PROJECT_DIR$/build/classes/java/test/dao/Sql2oLeagueDaoTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/App.java" afterPath="$PROJECT_DIR$/src/main/java/App.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/dao/LeagueDao.java" afterPath="$PROJECT_DIR$/src/main/java/dao/LeagueDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/dao/Sql2oLeagueDao.java" afterPath="$PROJECT_DIR$/src/main/java/dao/Sql2oLeagueDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/dao/Sql2oLeagueDaoTest.java" afterPath="$PROJECT_DIR$/src/test/java/dao/Sql2oLeagueDaoTest.java" />
