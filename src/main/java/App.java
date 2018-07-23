@@ -43,18 +43,18 @@ public class App {
             return gson.toJson(league);
         });
 
-        get("/league/:leagueId", "application/json", (req, res) -> {
+        get("/leagues/:leagueId", "application/json", (req, res) -> {
             int leagueId = Integer.parseInt(req.params("leagueId"));
             return gson.toJson(leagueDao.findById(leagueId));
         });
 
-        get("/league/:leagueId/delete", "application/json", (req, res) -> {
+        get("/leagues/:leagueId/delete", "application/json", (req, res) -> {
             int leagueId = Integer.parseInt(req.params("leagueId"));
             leagueDao.deleteById(leagueId);
             return "{\"message\":\"League Deleted\"}";
         });
 
-        post("/league/:leagueId/update", "application/json", (req, res) -> {
+        post("/leagues/:leagueId/update", "application/json", (req, res) -> {
             int leagueId = Integer.parseInt(req.params("leagueId"));
             HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
             res.status(201);
@@ -73,18 +73,18 @@ public class App {
             return gson.toJson(player);
         });
 
-        get("/player/:playerId", "application/json", (req, res) -> {
+        get("/players/:playerId", "application/json", (req, res) -> {
             int playerId = Integer.parseInt(req.params("playerId"));
             return gson.toJson(playerDao.findById(playerId));
         });
 
-        get("/player/:playerId/delete", "application/json", (req, res) -> {
+        get("/players/:playerId/delete", "application/json", (req, res) -> {
             int playerId = Integer.parseInt(req.params("playerId"));
             playerDao.deleteById(playerId);
             return "{\"message\":\"Player Deleted\"}";
         });
 
-        post("/player/:playerId/update", "application/json", (req, res) -> {
+        post("/players/:playerId/update", "application/json", (req, res) -> {
             int playerId = Integer.parseInt(req.params("playerId"));
             HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
             res.status(201);
@@ -103,18 +103,18 @@ public class App {
             return gson.toJson(sport);
         });
 
-        get("/sport/:sportId", "application/json", (req, res) -> {
+        get("/sports/:sportId", "application/json", (req, res) -> {
             int sportId = Integer.parseInt(req.params("sportId"));
             return gson.toJson(sportDao.findById(sportId));
         });
 
-        get("/sport/:sportId/delete", "application/json", (req, res) -> {
+        get("/sports/:sportId/delete", "application/json", (req, res) -> {
             int sportId = Integer.parseInt(req.params("sportId"));
             sportDao.deleteById(sportId);
             return "{\"message\":\"Sport Deleted\"}";
         });
 
-        post("/sport/:sportId/update", "application/json", (req, res) -> {
+        post("/sports/:sportId/update", "application/json", (req, res) -> {
             int sportId = Integer.parseInt(req.params("sportId"));
             HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
             res.status(201);
@@ -133,23 +133,27 @@ public class App {
             return gson.toJson(team);
         });
 
-        get("/team/:teamId", "application/json", (req, res) -> {
+        get("/teams/:teamId", "application/json", (req, res) -> {
             int teamId = Integer.parseInt(req.params("teamId"));
             return gson.toJson(teamDao.findById(teamId));
         });
 
-        get("/team/:teamId/delete", "application/json", (req, res) -> {
+        get("/teams/:teamId/delete", "application/json", (req, res) -> {
             int teamId = Integer.parseInt(req.params("teamId"));
             teamDao.deleteById(teamId);
             return "{\"message\":\"Team Deleted\"}";
         });
 
-        post("/team/:teamId/update", "application/json", (req, res) -> {
+        post("/teams/:teamId/update", "application/json", (req, res) -> {
             int teamId = Integer.parseInt(req.params("teamId"));
             HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
             res.status(201);
             teamDao.update(teamId, updateContent);
             return gson.toJson(teamDao.findById(teamId));
+        });
+
+        after((request, response) -> {
+            response.type("application/json");
         });
     }
 }
