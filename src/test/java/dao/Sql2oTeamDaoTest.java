@@ -1,5 +1,6 @@
 package dao;
 
+import models.Player;
 import models.Team;
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import static org.junit.Assert.*;
 
 public class Sql2oTeamDaoTest {
     private Sql2oTeamDao teamDao;
+    private Sql2oPlayerDao playerDao;
     private Connection con;
 
     @Before
@@ -63,6 +65,16 @@ public class Sql2oTeamDaoTest {
     }
 
     @Test
+    public void findByPlayer_returnsTeamsByPlayer() throws Exception {
+        Team testTeam = setupTeam();
+        Team testTeam2 = setupTeam2();
+        Player testPlayer = setupPlayer();
+        playerDao.addPlayerToTeam(1, 1);
+        playerDao.addPlayerToTeam(1, 2);
+        assertEquals(2, teamDao.findByPlayer(1).size());
+    }
+
+    @Test
     public void update() {
         Team testTeam = setupTeam();
         HashMap<String, Object> updateContent = new HashMap<>();
@@ -99,5 +111,17 @@ public class Sql2oTeamDaoTest {
         Team sampleTeam = new Team("Not-So-Super Heroes", "Gray", "sampleRegCode", 5, 2);
         teamDao.add(sampleTeam);
         return sampleTeam;
+    }
+
+    public Player setupPlayer(){
+        Player samplePlayer = new Player("Kristen", "Chellis", "peanutster@gmail.com", "Small", "female");
+        playerDao.add(samplePlayer);
+        return samplePlayer;
+    }
+
+    public Player setupPlayer2(){
+        Player samplePlayer = new Player("David", "Riley", "someemail@gmail.com", "Large", "male");
+        playerDao.add(samplePlayer);
+        return samplePlayer;
     }
 }

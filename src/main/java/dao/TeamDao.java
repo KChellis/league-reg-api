@@ -14,6 +14,7 @@ public interface TeamDao {
     //READ
     Team findById(int id);
     List<Team> findByLeague(int leagueId);
+    List<Team> findByPlayer(int playerId);
 
     //UPDATE
     void update(int id, HashMap<String, Object> updateContent);

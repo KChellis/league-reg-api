@@ -5,6 +5,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -56,6 +57,31 @@ public class Sql2oTeamDao implements TeamDao{
                     .addParameter("leagueId", leagueId)
                     .executeAndFetch(Team.class);
         }
+    }
+
+    @Override
+    public List<Team> findByPlayer(int playerId) {
+        ArrayList<Team> teams = new ArrayList<>();
+
+        String joinQuery = "SELECT teamId from players_teams WHERE playerId = :playerId";
+
+
+        try (Connection con = sql2o.open()) {
+            List<Integer> allTeamIds = con.createQuery(joinQuery)
+                    .addParameter("playerId", playerId)
+                    .executeAndFetch(Integer.class);
+            for(Integer teamId : allTeamIds){
+                String teamQuery = "SELECT * FROM teams WHERE teamId=:teamId";
+                teams.add(
+                        con.createQuery(teamQuery)
+                                .addParameter("teamId", teamId)
+                                .executeAndFetchFirst(Team.class));
+            }
+
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+        return teams;
     }
 
     @Override
