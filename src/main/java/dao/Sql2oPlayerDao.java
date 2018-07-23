@@ -5,6 +5,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,6 +40,19 @@ public class Sql2oPlayerDao implements PlayerDao{
     }
 
     @Override
+    public void addPlayerToTeam(int playerId, int teamId) {
+        String sql = "INSERT INTO players_teams (playerId, teamId) VALUES (:playerId, :teamId)";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("playerId", playerId)
+                    .addParameter("teamId", teamId)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
+
+    @Override
     public Player findById(int id) {
         String sql = "SELECT * FROM players WHERE id=:id";
         try (Connection con = sql2o.open()) {
@@ -46,6 +60,29 @@ public class Sql2oPlayerDao implements PlayerDao{
                     .addParameter("id", id)
                     .executeAndFetchFirst(Player.class);
         }
+    }
+
+    @Override
+    public List<Player> findByTeam(int teamId) {
+        ArrayList<Player> players = new ArrayList<>();
+
+        String joinQuery = "SELECT playerId FROM players_teams WHERE teamId = :teamId";
+
+        try (Connection con = sql2o.open()) {
+            List<Integer> allPlayerIds = con.createQuery(joinQuery)
+                    .addParameter("teamId", teamId)
+                    .executeAndFetch(Integer.class);
+            for (Integer playerId : allPlayerIds){
+                String playerQuery = "SELECT * FROM players WHERE id = :playerId";
+                players.add(
+                        con.createQuery(playerQuery)
+                                .addParameter("playerId", playerId)
+                                .executeAndFetchFirst(Player.class));
+            }
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+        return players;
     }
 
     @Override

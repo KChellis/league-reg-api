@@ -1,6 +1,7 @@
 package dao;
 
 import models.Player;
+import models.Team;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import static org.junit.Assert.*;
 
 public class Sql2oPlayerDaoTest {
     private Sql2oPlayerDao playerDao;
+    private Sql2oTeamDao teamDao;
     private Connection con;
 
     @Before
@@ -21,6 +23,7 @@ public class Sql2oPlayerDaoTest {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         playerDao = new Sql2oPlayerDao(sql2o);
+        teamDao = new Sql2oTeamDao(sql2o);
         con = sql2o.open();
     }
 
@@ -38,6 +41,20 @@ public class Sql2oPlayerDaoTest {
     public void add_SetsId() {
         Player testPlayer = setupPlayer();
         assertEquals(1, testPlayer.getId());
+    }
+
+    @Test
+    public void addPlayerToTeam() throws Exception {
+        Team testTeam = setupTeam();
+        Team testTeam2 = setupTeam2();
+        Player testPlayer = setupPlayer();
+        Player testPlayer2 = setupPlayer2();
+
+        playerDao.addPlayerToTeam(testPlayer.getId(), testTeam.getId());
+        playerDao.addPlayerToTeam(testPlayer2.getId(), testTeam.getId());
+
+        assertEquals(2, playerDao.findByTeam(testTeam.getId()).size());
+        assertEquals(0, playerDao.findByTeam(testTeam2.getId()).size());
     }
 
     @Test
@@ -91,5 +108,17 @@ public class Sql2oPlayerDaoTest {
         Player samplePlayer = new Player("David", "Riley", "someemail@gmail.com", "Large", "male");
         playerDao.add(samplePlayer);
         return samplePlayer;
+    }
+
+    public Team setupTeam(){
+        Team sampleTeam = new Team("Ingalls", "Yellow", "sampleRegCode", 3, 1);
+        teamDao.add(sampleTeam);
+        return sampleTeam;
+    }
+
+    public Team setupTeam2(){
+        Team sampleTeam = new Team("Not-So-Super Heroes", "Gray", "sampleRegCode", 5, 2);
+        teamDao.add(sampleTeam);
+        return sampleTeam;
     }
 }
