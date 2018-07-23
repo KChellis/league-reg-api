@@ -63,7 +63,7 @@ public class Sql2oTeamDao implements TeamDao{
     public List<Team> findByPlayer(int playerId) {
         ArrayList<Team> teams = new ArrayList<>();
 
-        String joinQuery = "SELECT teamId from players_teams WHERE playerId = :playerId";
+        String joinQuery = "SELECT teamId FROM players_teams WHERE playerId = :playerId";
 
 
         try (Connection con = sql2o.open()) {
@@ -71,7 +71,7 @@ public class Sql2oTeamDao implements TeamDao{
                     .addParameter("playerId", playerId)
                     .executeAndFetch(Integer.class);
             for(Integer teamId : allTeamIds){
-                String teamQuery = "SELECT * FROM teams WHERE teamId=:teamId";
+                String teamQuery = "SELECT * FROM teams WHERE id = :teamId";
                 teams.add(
                         con.createQuery(teamQuery)
                                 .addParameter("teamId", teamId)
