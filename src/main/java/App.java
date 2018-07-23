@@ -73,6 +73,22 @@ public class App {
             }
         });
 
+        get("/leagues/:leagueId/teams", "application/json", (req, res) -> {
+            try {
+                int leagueId = Integer.parseInt(req.params("leagueId"));
+                List<Team> teamsByLeague = teamDao.findByLeague(leagueId);
+                if(teamsByLeague.size() > 0){
+                    return gson.toJson(teamsByLeague);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"No teams match this league\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+        });
+
         get("/leagues/:leagueId/delete", "application/json", (req, res) -> {
             try{
                 int leagueId = Integer.parseInt(req.params("leagueId"));
@@ -222,13 +238,12 @@ public class App {
         get("/sports/:sportId/leagues", "application/json", (req, res) -> {
             try {
                 int sportId = Integer.parseInt(req.params("sportId"));
-                Sport currentSport = sportDao.findById(sportId);
                 List<League> leaguesBySport = leagueDao.findBySport(sportId);
                 if(leaguesBySport.size() > 0){
                     return gson.toJson(leaguesBySport);
                 } else {
                     res.status(404);
-                    return "{\"message\":\"No leagues match this sportgit\"}";
+                    return "{\"message\":\"No leagues match this sport\"}";
                 }
             } catch ( Error error){
                 res.status(400);
