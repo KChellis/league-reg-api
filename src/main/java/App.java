@@ -11,6 +11,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static spark.Spark.*;
 
@@ -33,123 +34,295 @@ public class App {
         conn = sql2o.open();
 
         get("/leagues", "application/json", (req, res) -> {
-            return gson.toJson(leagueDao.getAll());
+            List<League> allLeagues = leagueDao.getAll();
+            if(allLeagues.size() == 0){
+                res.status(404);
+                return "{\"message\":\"Sorry there are no leagues currently.\"}";
+            }else{
+                return gson.toJson(allLeagues);
+            }
+
         });
 
         post("/leagues/new", "application/json", (req, res) -> {
-            League league = gson.fromJson(req.body(), League.class);
-            leagueDao.add(league);
-            res.status(201);
-            return gson.toJson(league);
+            try {
+                League league = gson.fromJson(req.body(), League.class);
+                leagueDao.add(league);
+                res.status(201);
+                return gson.toJson(league);
+            } catch(Error error) {
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         get("/leagues/:leagueId", "application/json", (req, res) -> {
-            int leagueId = Integer.parseInt(req.params("leagueId"));
-            return gson.toJson(leagueDao.findById(leagueId));
+            try {
+                int leagueId = Integer.parseInt(req.params("leagueId"));
+                League currentLeague = leagueDao.findById(leagueId);
+                if(currentLeague != null){
+                    return gson.toJson(currentLeague);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"League not found\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
         });
 
         get("/leagues/:leagueId/delete", "application/json", (req, res) -> {
-            int leagueId = Integer.parseInt(req.params("leagueId"));
-            leagueDao.deleteById(leagueId);
-            return "{\"message\":\"League Deleted\"}";
+            try{
+                int leagueId = Integer.parseInt(req.params("leagueId"));
+                leagueDao.deleteById(leagueId);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         post("/leagues/:leagueId/update", "application/json", (req, res) -> {
-            int leagueId = Integer.parseInt(req.params("leagueId"));
-            HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
-            res.status(201);
-            leagueDao.update(leagueId, updateContent);
-            return gson.toJson(leagueDao.findById(leagueId));
+            try{
+                int leagueId = Integer.parseInt(req.params("leagueId"));
+                League currentLeague = leagueDao.findById(leagueId);
+                if (currentLeague != null){
+                    HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
+                    res.status(201);
+                    leagueDao.update(leagueId, updateContent);
+                    return gson.toJson(leagueDao.findById(leagueId));
+                } else{
+                    res.status(404);
+                    return "{\"message\":\"League not found\"}";
+                }
+
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         get("/players", "application/json", (req, res) -> {
-            return gson.toJson(playerDao.getAll());
+            List<Player> allPlayers = playerDao.getAll();
+            if(allPlayers.size() == 0){
+                res.status(404);
+                return "{\"message\":\"Sorry there are no players currently.\"}";
+            }else{
+                return gson.toJson(allPlayers);
+            }
+
         });
 
         post("/players/new", "application/json", (req, res) -> {
-            Player player = gson.fromJson(req.body(), Player.class);
-            playerDao.add(player);
-            res.status(201);
-            return gson.toJson(player);
+            try {
+                Player player = gson.fromJson(req.body(), Player.class);
+                playerDao.add(player);
+                res.status(201);
+                return gson.toJson(player);
+            } catch(Error error) {
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         get("/players/:playerId", "application/json", (req, res) -> {
-            int playerId = Integer.parseInt(req.params("playerId"));
-            return gson.toJson(playerDao.findById(playerId));
+            try {
+                int playerId = Integer.parseInt(req.params("playerId"));
+                Player currentPlayer = playerDao.findById(playerId);
+                if(currentPlayer != null){
+                    return gson.toJson(currentPlayer);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"Player not found\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
         });
 
         get("/players/:playerId/delete", "application/json", (req, res) -> {
-            int playerId = Integer.parseInt(req.params("playerId"));
-            playerDao.deleteById(playerId);
-            return "{\"message\":\"Player Deleted\"}";
+            try{
+                int playerId = Integer.parseInt(req.params("playerId"));
+                playerDao.deleteById(playerId);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         post("/players/:playerId/update", "application/json", (req, res) -> {
-            int playerId = Integer.parseInt(req.params("playerId"));
-            HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
-            res.status(201);
-            playerDao.update(playerId, updateContent);
-            return gson.toJson(playerDao.findById(playerId));
+            try{
+                int playerId = Integer.parseInt(req.params("playerId"));
+                Player currentPlayer = playerDao.findById(playerId);
+                if (currentPlayer != null){
+                    HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
+                    res.status(201);
+                    playerDao.update(playerId, updateContent);
+                    return gson.toJson(playerDao.findById(playerId));
+                } else{
+                    res.status(404);
+                    return "{\"message\":\"Player not found\"}";
+                }
+
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         get("/sports", "application/json", (req, res) -> {
-            return gson.toJson(sportDao.getAll());
+            List<Sport> allSports = sportDao.getAll();
+            if(allSports.size() == 0){
+                res.status(404);
+                return "{\"message\":\"Sorry there are no sports currently.\"}";
+            }else{
+                return gson.toJson(allSports);
+            }
+
         });
 
         post("/sports/new", "application/json", (req, res) -> {
-            Sport sport = gson.fromJson(req.body(), Sport.class);
-            sportDao.add(sport);
-            res.status(201);
-            return gson.toJson(sport);
+            try {
+                Sport sport = gson.fromJson(req.body(), Sport.class);
+                sportDao.add(sport);
+                res.status(201);
+                return gson.toJson(sport);
+            } catch(Error error) {
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         get("/sports/:sportId", "application/json", (req, res) -> {
-            int sportId = Integer.parseInt(req.params("sportId"));
-            return gson.toJson(sportDao.findById(sportId));
+            try {
+                int sportId = Integer.parseInt(req.params("sportId"));
+                Sport currentSport = sportDao.findById(sportId);
+                if(currentSport != null){
+                    return gson.toJson(currentSport);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"Sport not found\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
         });
 
         get("/sports/:sportId/delete", "application/json", (req, res) -> {
-            int sportId = Integer.parseInt(req.params("sportId"));
-            sportDao.deleteById(sportId);
-            return "{\"message\":\"Sport Deleted\"}";
+            try{
+                int sportId = Integer.parseInt(req.params("sportId"));
+                sportDao.deleteById(sportId);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         post("/sports/:sportId/update", "application/json", (req, res) -> {
-            int sportId = Integer.parseInt(req.params("sportId"));
-            HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
-            res.status(201);
-            sportDao.update(sportId, updateContent);
-            return gson.toJson(sportDao.findById(sportId));
+            try{
+                int sportId = Integer.parseInt(req.params("sportId"));
+                Sport currentSport = sportDao.findById(sportId);
+                if (currentSport != null){
+                    HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
+                    res.status(201);
+                    sportDao.update(sportId, updateContent);
+                    return gson.toJson(sportDao.findById(sportId));
+                } else{
+                    res.status(404);
+                    return "{\"message\":\"Sport not found\"}";
+                }
+
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         get("/teams", "application/json", (req, res) -> {
-            return gson.toJson(teamDao.getAll());
+            List<Team> allTeams = teamDao.getAll();
+            if(allTeams.size() == 0){
+                res.status(404);
+                return "{\"message\":\"Sorry there are no teams currently.\"}";
+            }else{
+                return gson.toJson(allTeams);
+            }
+
         });
 
         post("/teams/new", "application/json", (req, res) -> {
-            Team team = gson.fromJson(req.body(), Team.class);
-            teamDao.add(team);
-            res.status(201);
-            return gson.toJson(team);
+            try {
+                Team team = gson.fromJson(req.body(), Team.class);
+                teamDao.add(team);
+                res.status(201);
+                return gson.toJson(team);
+            } catch(Error error) {
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         get("/teams/:teamId", "application/json", (req, res) -> {
-            int teamId = Integer.parseInt(req.params("teamId"));
-            return gson.toJson(teamDao.findById(teamId));
+            try {
+                int teamId = Integer.parseInt(req.params("teamId"));
+                Team currentTeam = teamDao.findById(teamId);
+                if(currentTeam != null){
+                    return gson.toJson(currentTeam);
+                } else {
+                    res.status(404);
+                    return "{\"message\":\"Team not found\"}";
+                }
+            } catch ( Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
         });
 
         get("/teams/:teamId/delete", "application/json", (req, res) -> {
-            int teamId = Integer.parseInt(req.params("teamId"));
-            teamDao.deleteById(teamId);
-            return "{\"message\":\"Team Deleted\"}";
+            try{
+                int teamId = Integer.parseInt(req.params("teamId"));
+                teamDao.deleteById(teamId);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         post("/teams/:teamId/update", "application/json", (req, res) -> {
-            int teamId = Integer.parseInt(req.params("teamId"));
-            HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
-            res.status(201);
-            teamDao.update(teamId, updateContent);
-            return gson.toJson(teamDao.findById(teamId));
+            try{
+                int teamId = Integer.parseInt(req.params("teamId"));
+                Team currentTeam = teamDao.findById(teamId);
+                if (currentTeam != null){
+                    HashMap<String, Object> updateContent = gson.fromJson(req.body(), HashMap.class);
+                    res.status(201);
+                    teamDao.update(teamId, updateContent);
+                    return gson.toJson(teamDao.findById(teamId));
+                } else{
+                    res.status(404);
+                    return "{\"message\":\"Team not found\"}";
+                }
+
+            } catch (Error error){
+                res.status(400);
+                return "{\"message\":\"Sorry your request could not be processed\"}";
+            }
+
         });
 
         after((request, response) -> {
