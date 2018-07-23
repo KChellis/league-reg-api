@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS players (
 
 CREATE TABLE IF NOT EXISTS games (
  id int PRIMARY KEY auto_increment,
+ gameDay DATE,
  field VARCHAR,
  leagueId INTEGER,
  headRefId INTEGER,
