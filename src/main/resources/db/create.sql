@@ -3,14 +3,14 @@ SET MODE PostgreSql;
 CREATE TABLE IF NOT EXISTS leagues (
  id int PRIMARY KEY auto_increment,
  name VARCHAR,
- description,
+ description VARCHAR,
  weekday VARCHAR,
  sportId INTEGER,
  field VARCHAR,
  startDate DATE,
  earlyTime VARCHAR,
  lateTime VARCHAR,
- tournamentDay DATE
+ tourneyDay DATE
 );
 
 CREATE TABLE IF NOT EXISTS sports (
@@ -42,9 +42,7 @@ CREATE TABLE IF NOT EXISTS players (
 );
 
 CREATE TABLE IF NOT EXISTS games (
- id int PRIMARY KEY auto_increment
- date DATE,
- time TIME,
+ id int PRIMARY KEY auto_increment,
  field VARCHAR,
  leagueId INTEGER,
  headRefId INTEGER,
@@ -64,11 +62,11 @@ CREATE TABLE IF NOT EXISTS teams_games (
  id int PRIMARY KEY auto_increment,
  gameId INTEGER,
  teamId INTEGER
-)
+);
 
 CREATE TABLE IF NOT EXISTS referees (
  id int PRIMARY KEY auto_increment,
  playerId INTEGER,
  leagueId INTEGER
-)
+);
 
