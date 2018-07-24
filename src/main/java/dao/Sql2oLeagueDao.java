@@ -49,6 +49,16 @@ public class Sql2oLeagueDao implements LeagueDao{
     }
 
     @Override
+    public List<League> findBySport(int sportId) {
+        String sql = "SELECT * FROM leagues WHERE sportId = :sportId";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("sportId", sportId)
+                    .executeAndFetch(League.class);
+        }
+    }
+
+    @Override
     public void update(int id, HashMap<String, Object> updateContent) {
         for(String key : updateContent.keySet()){
             String sql = "UPDATE leagues SET " + key + " = :" + key + " WHERE id = :id";

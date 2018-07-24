@@ -13,6 +13,7 @@ public interface LeagueDao {
 
     //READ
     League findById(int id);
+    List<League> findBySport(int sportId);
 
     //UPDATE
     void update(int id, HashMap<String, Object> updateContent);
