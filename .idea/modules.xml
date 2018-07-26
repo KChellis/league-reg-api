@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/leagueApi.iml" filepath="$PROJECT_DIR$/.idea/modules/leagueApi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/leagueApi_main.iml" filepath="$PROJECT_DIR$/.idea/modules/leagueApi_main.iml" group="leagueApi" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/leagueApi_test.iml" filepath="$PROJECT_DIR$/.idea/modules/leagueApi_test.iml" group="leagueApi" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/League Registration.iml" filepath="$PROJECT_DIR$/.idea/modules/League Registration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/League_Registration_main.iml" filepath="$PROJECT_DIR$/.idea/modules/League_Registration_main.iml" group="League Registration" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/League_Registration_test.iml" filepath="$PROJECT_DIR$/.idea/modules/League_Registration_test.iml" group="League Registration" />
     </modules>
   </component>
 </project>

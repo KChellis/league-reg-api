@@ -75,4 +75,3 @@ CREATE TABLE IF NOT EXISTS referees (
  playerId INTEGER,
  leagueId INTEGER
 );
-

@@ -123,4 +123,3 @@ public class Sql2oPlayerDao implements PlayerDao{
         }
     }
 }
-

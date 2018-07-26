@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="leagueApi_main" target="1.8" />
-      <module name="leagueApi_test" target="1.8" />
+      <module name="League_Registration_main" target="1.8" />
+      <module name="League_Registration_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

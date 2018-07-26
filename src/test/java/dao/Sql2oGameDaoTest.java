@@ -62,7 +62,7 @@ public class Sql2oGameDaoTest {
         Game testGame3 = setupGame();
         assertEquals(2, gameDao.findByLeague(1).size());
     }
-    
+
 
     @Test
     public void update() {
@@ -93,11 +93,13 @@ public class Sql2oGameDaoTest {
 
     public Game setupGame(){
         Game testGame = new Game(new Date(10/20/2018), "Overlook 1", 1, 1, 2);
+        gameDao.add(testGame);
         return testGame;
     }
 
     public Game setupGame2(){
         Game testGame = new Game(new Date(10/27/2018), "Overlook 2", 2, 3, 4);
+        gameDao.add(testGame);
         return testGame;
     }
 }

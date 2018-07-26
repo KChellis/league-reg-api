@@ -27,7 +27,7 @@ public class Sql2oGameDao implements GameDao{
 
     @Override
     public void add(Game game) {
-        String sql = "INSERT INTO games (gameDay, field, leagueId, sportId, field, startDate, earlyTime, lateTime, tourneyDay) VALUES (:gameDay, :field, :leagueId, :sportId, :field, :startDate, :earlyTime, :lateTime, :tourneyDay)";
+        String sql = "INSERT INTO games (gameDay, field, leagueId, headRefId, otherRefId) VALUES (:gameDay, :field, :leagueId, :headRefId, :otherRefId)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql, true)
                     .bind(game)
